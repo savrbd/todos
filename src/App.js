@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import Main from "./layout/main";
+import Todos from "./layout/todos";
+import { Route, Routes } from "react-router-dom";
+import NavBar from "./component/navBar";
+import { useDispatch } from "react-redux";
+import { loadTodos } from "./store/todos";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadTodos());
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path="/todos" element={<Todos />} />
+        <Route path="/" element={<Main />} />
+      </Routes>
+    </>
   );
 }
 
